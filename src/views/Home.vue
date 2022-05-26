@@ -1,23 +1,25 @@
 <template>
-  <el-container>
+  <el-container v-loading="loading">
     <el-header>
-      <el-row>
-        <el-col :span="12" style="line-height: 32px;">
+      <el-row class="row">
+        <el-col :span="8">
           全局监听
         </el-col>
         <el-col :span="12">
           <el-switch
               v-model="listen"
-              active-text="监听中"
-              inactive-text="关闭"
               @change="listenChange"
           />
         </el-col>
+        <el-col :span="4">
+          <router-link :to="{name:'Detail',params:{id:'-'}}">
+            <el-button type="primary" :icon="Plus" circle/>
+          </router-link>
+        </el-col>
       </el-row>
     </el-header>
-    <el-divider/>
     <el-main>
-      <router-link :to="{name:'Detail',params:{id:item.id}}" @click="itemClick(item)" v-for="item in list"
+      <router-link :to="{name:'Detail',params:{id:item.id}}" v-for="item in list"
                    :key="item.id" tag="li">
         <el-row>
           <el-col :span="21" style="line-height: 32px;white-space: nowrap;text-overflow:ellipsis;overflow: hidden;">
@@ -39,24 +41,32 @@
 
 <script lang="ts" setup>
 import {getCurrentInstance, onBeforeMount, ref} from 'vue';
+import {
+  Plus
+} from '@element-plus/icons-vue'
 
 const listen = ref(true)
+const loading = ref(true);
 const {proxy} = getCurrentInstance()
-const list = ref([]);
+const list = ref([])
 onBeforeMount(() => {
-  proxy.$axios.get('/api/list').then(response => {
-    console.log(response)
-    list.value = response.data.data;
+  proxy.$axios.get('/api/infos').then(response => {
+    console.log('infos', response)
+    list.value = response.data.data.list
+    listen.value = response.data.data.listen
+    loading.value = false
   })
 })
 const listenChange = (value) => {
-  console.log('listen change', value);
-  listen.value = value;
-}
-const itemClick = (e) => {
-  console.log('item click ', e)
+  console.log('listen change', value)
+  proxy.$axios.post(`/api/listen/${value}`).then(response => {
+    console.log('listen', response.data)
+  })
 }
 </script>
 
 <style lang="scss" scoped>
+.row {
+  line-height: 32px;
+}
 </style>
