@@ -3,8 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "cross-env USE_MOCK=false vite --mode development",
-    "test": "cross-env NODE_ENV=test vite",
+    "dev": "cross-env USE_MOCK=true vite --mode development",
+    "test": "cross-env USE_MOCK=false vite --mode test",
+    "prod": "cross-env USE_MOCK=false vite --mode production",
     "build": "cross-env NODE_ENV=prod vite build",
     "build-plus": "vue-tsc --noEmit && cross-env vite build --mode production",
     "preview": "vite preview",

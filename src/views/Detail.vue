@@ -22,34 +22,41 @@
         <el-col :span="12">
           <el-switch
               v-model="data.listen"
-              @change="listenChange"
           />
         </el-col>
       </el-row>
     </el-header>
     <el-divider/>
     <el-main>
-      <el-form :model="data" label-width="4rem">
+      <el-form :model="data" label-width="5rem">
         <el-form-item label="关键字">
           <el-input v-model="data.text"/>
         </el-form-item>
-        <el-form-item label="规则">
+        <el-form-item label="使用相似">
+          <el-switch
+              v-model="data.useLike"
+          />
+        </el-form-item>
+        <el-form-item v-if="data.useLike" label="相似度">
+          <el-input v-model="data.like"/>
+        </el-form-item>
+        <el-form-item v-if="!data.useLike" label="匹配规则">
           <el-select v-model="data.match" placeholder="请选择规则">
             <el-option label="相等" value="EQ"/>
             <el-option label="包含" value="IN"/>
           </el-select>
         </el-form-item>
+        <el-form-item label="消息回复">
+          <el-switch v-model="data.send"/>
+        </el-form-item>
+        <el-form-item label="回复内容">
+          <el-input v-model="data.sendMessage" :disabled="!data.send" type="textarea"/>
+        </el-form-item>
+        <el-form-item style="float:right;">
+          <el-button v-if="!isAdd" type="danger" @click="onDelete" style="margin-right: 1rem">删除</el-button>
+          <el-button type="primary" @click="onSubmit" :disabled="!edit">保存</el-button>
+        </el-form-item>
       </el-form>
-      <el-form-item label="消息回复">
-        <el-switch v-model="data.send"/>
-      </el-form-item>
-      <el-form-item label="回复内容">
-        <el-input v-model="data.sendMessage" :disabled="!data.send" type="textarea"/>
-      </el-form-item>
-      <el-form-item style="float:right;">
-        <el-button v-if="!isAdd" type="danger" @click="onDelete" style="margin-right: 1rem">删除</el-button>
-        <el-button type="primary" @click="onSubmit" :disabled="!edit">保存</el-button>
-      </el-form-item>
     </el-main>
   </el-container>
 </template>
@@ -67,6 +74,8 @@ const {proxy} = getCurrentInstance()
 const data = reactive({
   listen: false,
   text: '',
+  like: 0.6,
+  useLike: true,
   id: -1,
   match: 'IN',
   send: false,
@@ -99,10 +108,6 @@ onBeforeMount(() => {
     endLoading();
   }
 })
-const listenChange = (value) => {
-  console.log('listen change', value);
-  data.listen = value;
-}
 const onSubmit = () => {
   startLoading();
   if (isAdd.value) {

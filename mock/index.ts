@@ -6,6 +6,8 @@ let dataList = [
         text: '有没有猫砂推荐mock',
         match: 'EQ',
         id: '1',
+        like: 0.6,
+        useLike: true,
         listen: false,
         send: false,
         sendMessage: ''
@@ -14,6 +16,8 @@ let dataList = [
         text: '有没有',
         match: 'EQ',
         id: '2',
+        like: 0.6,
+        useLike: true,
         listen: false,
         send: true,
         sendMessage: '你问一下群主'
@@ -21,6 +25,8 @@ let dataList = [
         text: 'hello',
         match: 'IN',
         id: '3',
+        like: 0.6,
+        useLike: true,
         listen: false,
         send: false,
         sendMessage: ''
@@ -28,6 +34,8 @@ let dataList = [
         text: '在吗',
         match: 'IN',
         id: '4',
+        like: 0.6,
+        useLike: true,
         listen: false,
         send: false,
         sendMessage: ''
@@ -81,7 +89,7 @@ export default [
             return {
                 status: "ok",
                 data: {
-                    listen: false,
+                    listen: true,
                     list: dataList
                 },
             }

@@ -26,7 +26,7 @@
             {{ item.text }}
           </el-col>
           <el-col :span="2" style="color:#ccc;">
-            {{ item.match }}
+            {{ item.useLike ? 'like' : item.match.toLowerCase() }}
           </el-col>
           <el-col :span="1">
             <el-icon style="vertical-align: middle" color="#ccc">
