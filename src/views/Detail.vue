@@ -49,7 +49,17 @@
         <el-form-item label="消息回复">
           <el-switch v-model="data.send"/>
         </el-form-item>
-        <el-form-item label="回复内容">
+        <el-form-item v-if="data.send" label="消息类型">
+          <el-select v-model="data.messageType" placeholder="请选择类型">
+            <el-option label="文字" value="sendText"/>
+            <el-option label="小程序" value="sendApp"/>
+            <el-option label="图片" value="sendRecvImage"/>
+            <el-option label="链接" value="forwardUrl"/>
+            <el-option label="视频" value="sendRecvVideo"/>
+            <el-option label="文件" value="sendRecvFile"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item v-if="data.send" label="回复内容">
           <el-input v-model="data.sendMessage" :disabled="!data.send" type="textarea"/>
         </el-form-item>
         <el-form-item style="float:right;">
@@ -79,7 +89,8 @@ const data = reactive({
   id: -1,
   match: 'IN',
   send: false,
-  sendMessage: ''
+  sendMessage: '',
+  messageType: 'sendText'
 });
 const startLoading = () => {
   loading.value = true;
