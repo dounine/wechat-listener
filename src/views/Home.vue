@@ -52,7 +52,11 @@ const list = ref([])
 onBeforeMount(() => {
   proxy.$axios.get('/api/infos').then(response => {
     console.log('infos', response)
-    list.value = response.data.data.list
+    let ll = response.data.data.list;
+    ll.sort(function (a, b) {
+      return b.text.localeCompare(a.text)
+    })
+    list.value = ll
     listen.value = response.data.data.listen
     loading.value = false
   })

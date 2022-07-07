@@ -49,6 +49,11 @@
         <el-form-item label="消息回复">
           <el-switch v-model="data.send"/>
         </el-form-item>
+        <el-form-item label="使用助理">
+          <el-switch
+              v-model="data.assistant"
+          />
+        </el-form-item>
         <el-form-item v-if="data.send" label="消息类型">
           <el-select v-model="data.messageType" placeholder="请选择类型">
             <el-option label="文字" value="sendText"/>
@@ -90,6 +95,7 @@ const data = reactive({
   match: 'IN',
   send: false,
   sendMessage: '',
+  assistant: false,
   messageType: 'sendText'
 });
 const startLoading = () => {
