@@ -44,6 +44,7 @@
           <el-select v-model="data.match" placeholder="请选择规则">
             <el-option label="相等" value="EQ"/>
             <el-option label="包含" value="IN"/>
+            <el-option label="匹配" value="ALL"/>
           </el-select>
         </el-form-item>
         <el-form-item label="消息回复">
@@ -58,14 +59,21 @@
           <el-select v-model="data.messageType" placeholder="请选择类型">
             <el-option label="文字" value="sendText"/>
             <el-option label="小程序" value="sendApp"/>
-            <el-option label="图片" value="sendRecvImage"/>
-            <el-option label="链接" value="forwardUrl"/>
-            <el-option label="视频" value="sendRecvVideo"/>
-            <el-option label="文件" value="sendRecvFile"/>
+            <el-option label="表情" value="sendEmoji"/>
+            <el-option label="名片" value="sendNameCard"/>
+            <el-option label="链接" value="sendUrl"/>
+            <el-option label="视频" value="sendVideo"/>
+            <el-option label="语音" value="sendVoice"/>
+            <el-option label="图片" value="sendImage"/>
+            <el-option label="文件" value="sendFile"/>
+            <el-option label="转发图片" value="sendRecvImage"/>
+            <el-option label="转发链接" value="forwardUrl"/>
+            <el-option label="转发视频" value="sendRecvVideo"/>
+            <el-option label="转发文件" value="sendRecvFile"/>
           </el-select>
         </el-form-item>
         <el-form-item v-if="data.send" label="回复内容">
-          <el-input v-model="data.sendMessage" :disabled="!data.send" type="textarea"/>
+          <el-input input-style="height:100px;" v-model="data.sendMessage" :disabled="!data.send" type="textarea"/>
         </el-form-item>
         <el-form-item style="float:right;">
           <el-button v-if="!isAdd" type="danger" @click="onDelete" style="margin-right: 1rem">删除</el-button>
@@ -87,16 +95,16 @@ const isAdd = ref(false)
 const deleteDialog = ref(false)
 const {proxy} = getCurrentInstance()
 const data = reactive({
-  listen: false,
+  listen: true,
   text: '',
   like: 0.6,
-  useLike: true,
+  useLike: false,
   id: -1,
-  match: 'IN',
-  send: false,
+  match: 'ALL',
+  send: true,
   sendMessage: '',
-  assistant: false,
-  messageType: 'sendText'
+  assistant: true,
+  messageType: 'sendApp'
 });
 const startLoading = () => {
   loading.value = true;
