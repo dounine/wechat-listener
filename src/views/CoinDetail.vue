@@ -62,7 +62,11 @@ const endLoading = () => {
 }
 const confirmSend = () => {
   startLoading();
-  proxy.$axios.post(`/api/coin/down`, data).then(response => {
+  let copyData = {
+    ...data,
+    coin:parseInt(data.coin+""),
+  }
+  proxy.$axios.post(`/api/coin/down`, copyData).then(response => {
     console.log('send info', response.data);
     endLoading();
     ElMessage({
