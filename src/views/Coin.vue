@@ -31,7 +31,7 @@ const loading = ref(true);
 const {proxy} = getCurrentInstance()
 const list = ref([])
 onBeforeMount(() => {
-  proxy.$axios.get('/api/coin/down').then(response => {
+  proxy.$axios.get('/api/charts').then(response => {
     console.log('infos', response)
     list.value = response.data.data
     loading.value = false
