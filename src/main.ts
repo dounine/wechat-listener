@@ -6,13 +6,13 @@ import EP from 'element-plus'
 import axios from 'axios';
 import MyAxios from './myaxios.d';
 import VueAxios from 'vue-axios';
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+// import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 
 const app = createApp(App)
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
-}
+// for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+//     app.component(key, component)//TODO 不需要导入也可以使用
+// }
 app.use(router).use(VueAxios, axios)
 if (import.meta.env.VITE_ENV === 'pro') {
     app.use(ElementPlus)
