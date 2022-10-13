@@ -1,7 +1,7 @@
 import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router/index'
-import EP from 'element-plus'
+import ElementPlus from 'element-plus'
 // import 'element-plus/dist/index.css'
 import axios from 'axios';
 import MyAxios from './myaxios.d';
@@ -13,11 +13,9 @@ const app = createApp(App)
 // for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 //     app.component(key, component)//TODO 不需要导入也可以使用
 // }
-app.use(router).use(VueAxios, axios)
-if (import.meta.env.VITE_ENV === 'pro') {
-    app.use(ElementPlus)
-} else {
-    app.use(EP)
-}
-app.mount('#app')
+app
+    .use(router)
+    .use(VueAxios, axios)
+    .use(ElementPlus)
+    .mount('#app')
 app.config.globalProperties.$axios = MyAxios;
